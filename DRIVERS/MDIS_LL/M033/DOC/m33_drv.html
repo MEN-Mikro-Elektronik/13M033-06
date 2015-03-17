@@ -1,0 +1,380 @@
+<html>
+<head>
+<title>M033 driver</title>
+<style type=text/css>
+    Body { background-color: #ffffff; }
+    A:link { color: #c50038; }
+    A:hover { color: #28669b; }
+    P, H1, H2, H3, H3, H5, LI {
+        color: #434343;
+        font-family: Arial, Helvetica, Univers;
+    }
+    P, LI { font-size: 9.000000pt; }
+</style>
+</head>
+<body>
+<h1>M033 driver</h1>
+<p>Wed Apr 14 12:04:18 CEST 2004</p>
+<h2>Overview of all Functions</h2>
+<a name="chapt0"><a href="#intro0"><h3>MDIS low level driver for M33 module</h3></a>
+<TABLE border=1>
+<TR><TD><P><B>Function</B></P></TD><TD><P><B>Description</B></P></TD></TR>
+
+<TR><TD><P><a href="#M33_GetEntry">M33_GetEntry</a></P></TD><TD><P>Gets the entry points of the low-level driver functions. </P></TD></TR>
+<TR><TD><P><a href="#M33_Init">M33_Init</a></P></TD><TD><P>Allocates and initialize the LL structure </P></TD></TR>
+<TR><TD><P><a href="#M33_Exit">M33_Exit</a></P></TD><TD><P>Deinitializes the hardware </P></TD></TR>
+<TR><TD><P><a href="#M33_Read">M33_Read</a></P></TD><TD><P>(unused) </P></TD></TR>
+<TR><TD><P><a href="#M33_Write">M33_Write</a></P></TD><TD><P>Writing to channel 'ch' on module </P></TD></TR>
+<TR><TD><P><a href="#M33_SetStat">M33_SetStat</a></P></TD><TD><P>Changes the device state. </P></TD></TR>
+<TR><TD><P><a href="#M33_GetStat">M33_GetStat</a></P></TD><TD><P>Gets the device state. </P></TD></TR>
+<TR><TD><P><a href="#M33_BlockRead">M33_BlockRead</a></P></TD><TD><P>(unused) </P></TD></TR>
+<TR><TD><P><a href="#M33_BlockWrite">M33_BlockWrite</a></P></TD><TD><P>Output values in 'buf' to all channels of m33 module. </P></TD></TR>
+<TR><TD><P><a href="#M33_Irq">M33_Irq</a></P></TD><TD><P>(unused - the module have no interrupt ) </P></TD></TR>
+<TR><TD><P><a href="#M33_Info">M33_Info</a></P></TD><TD><P>Gets low level driver info. </P></TD></TR>
+<TR><TD><P><a href="#Ident">Ident</a></P></TD><TD><P>Return ident string </P></TD></TR>
+</TABLE>
+ 
+<a name="intro0"><h1>MDIS low level driver for M33 module </h1></a>
+<pre>
+Required:  ---
+Switches:  _ONE_NAMESPACE_PER_DRIVER_
+
+</pre>
+<a name="M33_GetEntry"><h2>Function M33_GetEntry()</h2></a>
+
+<h3>Syntax</h3>
+<pre>#ifdef _ONE_NAMESPACE_PER_DRIVER_
+    void LL_GetEntry( LL_ENTRY* drvP )
+#else
+    void M33_GetEntry( LL_ENTRY* drvP )
+#endif /* _ONE_NAMESPACE_PER_DRIVER_ */
+</pre><h3>Description</h3>
+<pre>Gets the entry points of the low-level driver functions.
+
+Note:  Is used by MDIS kernel only.
+
+</pre><h3>Input</h3>
+<pre>---
+
+</pre><h3>Output</h3>
+<pre>drvP  pointer to the initialized structure
+
+</pre>
+<a name="M33_Init"><h2>Function M33_Init()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M33_Init(
+    DESC_SPEC       *descSpec,
+    OSS_HANDLE      *osHdl,
+    MACCESS         *maHdl,
+    OSS_SEM_HANDLE  *devSem,
+    OSS_IRQ_HANDLE  *irqHdl,
+    LL_HANDLE       **llHdlP)
+</pre><h3>Description</h3>
+<pre>Allocates and initialize the LL structure
+Decodes descriptor
+Reads and checks the ID if in descriptor enabled
+Initialize the hardware
+  - reset module ( all channels to 0V / 0(4)mA )
+  - sets all predefined ranges (channel options)
+The driver supports 8 analog output channels.
+
+Deskriptor key    Default           Range/Unit
+------------------------------------------------------------
+DEBUG_LEVEL       OSS_DBG_DEFAULT  see dbg.h
+DEBUG_LEVEL_DESC  OSS_DBG_DEFAULT  see dbg.h
+ID_CHECK          0                0..1  0 - disabled
+
+CHANNEL_%d/       0                value  U[V]    I[mA]    
+ M33_CH_RANGE                      -------------------------
+(%d = 0..7)                        0     0..+10   0(4)..+20
+                                   1    -5..+5    prohibited 
+                                   3   -10..+10   prohibited
+
+</pre><h3>Input</h3>
+<pre>descSpec      descriptor specifier
+osHdl         pointer to the os specific structure
+maHdl         access handle
+              (in simplest case module base address)
+devSemHdl     device semaphore for unblocking in wait
+irqHdl        irq handle for mask and unmask interrupts
+llHdlP        pointer to the variable where low level driver
+              handle will be stored
+
+</pre><h3>Output</h3>
+<pre>llHdlP        pointer to low level driver handle
+return        0 | error code
+
+</pre>
+<a name="M33_Exit"><h2>Function M33_Exit()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M33_Exit(
+    LL_HANDLE   **llHdlP)
+</pre><h3>Description</h3>
+<pre>Deinitializes the hardware
+- resets all ranges
+- reset module ( all channels to 0V / 0(4)mA )
+Frees allocated memory
+
+</pre><h3>Input</h3>
+<pre>llHdlP        pointer to low level driver handle
+
+</pre><h3>Output</h3>
+<pre>llHdlP        NULL
+return        0 | error code
+
+</pre>
+<a name="M33_Read"><h2>Function M33_Read()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M33_Read(
+    LL_HANDLE   *llHdl,
+    int32       ch,
+    int32       *valueP)
+</pre><h3>Description</h3>
+<pre>(unused)
+
+</pre><h3>Input</h3>
+<pre>llHdl     pointer to low-level driver data structure
+ch        current channel
+
+</pre><h3>Output</h3>
+<pre>valueP    read value
+return    0 | error code
+
+</pre>
+<a name="M33_Write"><h2>Function M33_Write()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M33_Write(
+    LL_HANDLE   *llHdl,
+    int32       ch,
+    int32       value)
+</pre><h3>Description</h3>
+<pre>Writing to channel 'ch' on module
+- sets output value (12 bits left-aligned)
+
+</pre><h3>Input</h3>
+<pre>llHdl     pointer to low-level driver data structure
+ch        current channel (0..7)
+value     0x0000..0xFFF0
+
+</pre><h3>Output</h3>
+<pre>return    0 | error code
+
+</pre>
+<a name="M33_SetStat"><h2>Function M33_SetStat()</h2></a>
+
+<h3>Syntax</h3>
+<pre>
+    int32 M33_SetStat(
+    LL_HANDLE   *llHdl,
+    int32       code,
+    int32       ch,
+    INT32_OR_64 value32_or_64)
+</pre><h3>Description</h3>
+<pre>Changes the device state.
+
+common codes            values          meaning
+---------------------------------------------------------------------
+M_LL_DEBUG_LEVEL        see dbg.h       enable/disable debug output
+M_LL_CH_DIR             M_CH_OUT        channel direction
+
+M33 specific codes      values          meaning
+---------------------------------------------------------------------
+M33_CH_RANGE            0, 1, 3         set output range
+
+                                        value  U[V]    I[mA]    
+                                        -------------------------
+                                        0     0..+10   0(4)..+20
+                                        1    -5..+5    prohibited 
+                                        3   -10..+10   prohibited
+
+</pre><h3>Input</h3>
+<pre>
+    llHdl     pointer to low-level driver data structure
+    code      setstat code
+    ch        current channel (0..7)
+    value32_or_64     setstat value or pointer to blocksetstat data
+
+</pre><h3>Output</h3>
+<pre>return    0 | error code
+
+</pre>
+<a name="M33_GetStat"><h2>Function M33_GetStat()</h2></a>
+
+<h3>Syntax</h3>
+<pre>
+    int32 M33_GetStat(
+    LL_HANDLE   *llHdl,
+    int32       code,
+    int32       ch,
+    INT32_OR_64 *value32_or_64P)
+</pre><h3>Description</h3>
+<pre>Gets the device state.
+
+common codes            values          meaning
+---------------------------------------------------------------------
+M_LL_CH_NUMBER          8               number of channels
+
+M_LL_CH_DIR             M_CH_OUT        direction of curr ch
+                                         always out
+
+M_LL_CH_LEN             12              channel length in bit
+
+M_LL_CH_TYP             M_CH_ANALOG     channel type
+
+M_LL_ID_CHECK           0 or 1          check EEPROM-Id from module
+
+M_LL_DEBUG_LEVEL        see dbg.h       current debug level
+
+M_LL_ID_SIZE            128             eeprom size [bytes] 
+
+M_LL_BLK_ID_DATA        -               eeprom raw data         
+
+*** NOTE: getting M_LL_BLK_ID_DATA, resets the module, i.e. resets ***
+***       all Parameters their reset state.                        ***
+***       (this is a known driver bug)                             ***
+
+M_MK_BLK_REV_ID         pointer to the ident function table
+
+M33 specific codes      values          meaning
+---------------------------------------------------------------------
+M33_CH_RANGE            0, 1, 3         get output range
+                                        (see M33_SetStat)
+
+</pre><h3>Input</h3>
+<pre>llHdl     pointer to low-level driver data structure
+code      getstat code
+ch        current channel (0..7)
+
+</pre><h3>Output</h3>
+<pre>
+    value32_or_64P    pointer to getstat value or
+    pointer to blocksetstat data
+    return    0 | error code
+
+</pre>
+<a name="M33_BlockRead"><h2>Function M33_BlockRead()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M33_BlockRead(
+     LL_HANDLE  *llHdl,
+     int32      ch,
+     void       *buf,
+     int32      size,
+     int32      *nbrRdBytesP)
+</pre><h3>Description</h3>
+<pre>(unused)
+
+</pre><h3>Input</h3>
+<pre>llHdl         pointer to low-level driver data structure
+ch            current channel
+buf           buffer to store read values
+size          should be multiple of width
+
+</pre><h3>Output</h3>
+<pre>nbrRdBytesP   number of read bytes
+return        0 | error code
+
+</pre>
+<a name="M33_BlockWrite"><h2>Function M33_BlockWrite()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M33_BlockWrite(
+     LL_HANDLE  *llHdl,
+     int32      ch,
+     void       *buf,
+     int32      size,
+     int32      *nbrWrBytesP
+)
+</pre><h3>Description</h3>
+<pre>Output values in 'buf' to all channels of m33 module.
+Channels will be written in rising order (0..7).
+- loads the values of all channels
+- outputs all channels at the same time
+
+</pre><h3>Input</h3>
+<pre>llHdl         pointer to low-level driver data structure
+ch            current channel (always ignored)
+buf           buffer where output values are stored
+size          number of bytes to write (8*2=16 bytes)
+
+</pre><h3>Output</h3>
+<pre>nbrWrBytesP   number of written bytes (0 or 16)
+return        0 | error code   
+
+</pre>
+<a name="M33_Irq"><h2>Function M33_Irq()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M33_Irq(
+   LL_HANDLE    *llHdl)
+</pre><h3>Description</h3>
+<pre>(unused - the module have no interrupt )
+
+</pre><h3>Input</h3>
+<pre>llHdl  pointer to ll-drv data structure
+
+</pre><h3>Output</h3>
+<pre>return LL_IRQ_DEV_NOT
+
+</pre>
+<a name="M33_Info"><h2>Function M33_Info()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M33_Info
+(
+   int32  infoType,
+   ...
+)
+</pre><h3>Description</h3>
+<pre>Gets low level driver info.
+
+NOTE: can be called before M33_Init().
+
+supported info type codes       value          meaning
+------------------------------------------------------------------------
+LL_INFO_HW_CHARACTER
+arg2  u_int32 *addrModeChar    MDIS_MA08       M-Module characteristic
+arg3  u_int32 *dataModeChar    MDIS_MD16       M-Module characteristic
+
+LL_INFO_ADDRSPACE_COUNT
+arg2  u_int32 *nbrOfMaddr      1               number of address spaces
+
+LL_INFO_ADDRSPACE
+arg2  u_int32 addrNr           0       current address space
+arg3  u_int32 *addrMode        MDIS_MA08       used address mode
+arg4  u_int32 *dataMode        MDIS_MD16       used data mode
+arg5  u_int32 *addrSize        0xff            needed size
+
+LL_INFO_IRQ
+arg2  u_int32 *useIrq          0           module use no interrupt
+
+The LL_INFO_LOCKMODE 
+arg2  u_int32 *lockModeP       LL_LOCK_CALL            lock mode needed by driver
+
+</pre><h3>Input</h3>
+<pre>infoType          desired information
+...               variable argument list
+
+</pre><h3>Output</h3>
+<pre>return            0 | error code
+
+</pre>
+<a name="Ident"><h2>Function Ident()</h2></a>
+
+<h3>Syntax</h3>
+<pre>static char* Ident( void )
+</pre><h3>Description</h3>
+<pre>Return ident string
+
+</pre><h3>Input</h3>
+<pre>-
+
+</pre><h3>Output</h3>
+<pre>return  ptr to ident string
+
+</pre></body>
+</html>

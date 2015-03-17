@@ -1,0 +1,108 @@
+===== [ History of fileset ART/13M033-06/13M033-06 ] =====
+
+
+-----[ Revision 2.2 ]-----
+[ 2010-12-10 15:09:24 by amorbach ]
+R: Porting to MDIS5
+M: changed according to MDIS Porting Guide 0.9
+
+-----[ Revision 2.1 ]-----
+[ 2005-07-11 10:43:17 by cs ]
+swapped oss and id(_sw) in driver(_sw).mak, MAK_LIBS
+removed useless "break" instruction in m33_drv.c, function M33_GetStat
+
+-----[ Revision 2.0 ]-----
+[ 2004-04-14 14:56:23 by cs ]
+Minor modifications for MDIS4/2004 conformity
+Added swapped access variant
+
+-----[ Revision 1.6 ]-----
+[ 1998-08-03 14:50:27 by Schmidt ]
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/DRIVER/COM/m33_drv.c RCS 1.4 -> RCS 1.8
+   idFuncTbl is now located in LL_HANDLE
+   idFuncTbl is now initialized in Init
+   IdFuncTbl() removed
+   error messages are now with prefix LL
+   use CH_NUMBER instead of M33_CHNL_NUMBER
+   M_DEV_CH_OPTION renamed to M33_CH_RANGE
+   wrong static const char *IdentString type changed
+   M33_Init: ID_CHECK default is now 1
+   M33_Init: error message was wrong
+   M33_Getstat: M_LL_ID_SIZE returned wrong size=32
+   M33_Getstat: M_LL_BLK_ID_DATA changed (template style)
+   LL_HANDLE: unused irqHdl removed
+   LL_HANDLE: base renamed to ma (template style)
+   some defs renamed (template style)
+   some defs added (template style)
+   "Known bugs" info is no in M33_GetStat header (M_LL_BLK_ID_DATA)
+   DBGEXIT() added
+   update to MDIS 4.1, new function IdFuncTbl(),
+   Set/Getstat: M_BUF_WR_MODE removed
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/DRIVER/COM/m33_max.dsc RCS 1.3 -> RCS 1.6
+   OPTION renamed to M33_CH_RANGE
+   ID_CHECK default=1
+   DESC_TYPE now U_INT32, new style
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/DRIVER/COM/m33_min.dsc RCS 1.2 -> RCS 1.3
+   DESC_TYPE now U_INT32, new style
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/EXAMPLE/M33_DEMO/COM/m33_demo.c RCS 1.2 -> RCS 1.5
+   M_DEV_CH_OPTION renamed to M33_CH_RANGE
+   run-loop removed: single executed
+   M_close error check was wrong
+   cosmetics
+   VXWORKS defines removed, support for variable device names implemented,
+   cosmetics to new style
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/EXAMPLE/M33_EX1/COM/m33_ex1.c RCS 1.3 -> RCS 1.6
+   M_DEV_CH_OPTION renamed to M33_CH_RANGE
+   TEST M_setblock(): endless loop replace by for 0..9 loop
+   TEST M_setblock(): print info
+   cosmetics
+   VXWORKS defines removed, support for variable device names implemented,
+   cosmetics to new style
+File /_CVS_/COM/INCLUDE/m33_drv.h RCS 1.2 -> RCS 1.3
+   M_DEV_CH_OPTION renamed to M33_CH_RANGE
+   M33_CHNL_NBR removed
+
+-----[ Revision 1.5 ]-----
+[ 1998-04-21 12:14:41 by Schmidt ]
+*** CHANGED FILES ***
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/DRIVER/COM/m33_max.dsc RCS 1.1 -> RCS 1.3
+   convert d201_1 to D201_1
+   CH_CURRENT removed
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/DRIVER/COM/m33_min.dsc RCS 1.1 -> RCS 1.2
+   convert d201_1 to D201_1
+
+-----[ Revision 1.4 ]-----
+[ 1998-03-13 15:44:22 by Schmidt ]
+*** CHANGED FILES ***
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/DRIVER/COM/m33_drv.c RCS 1.3 -> RCS 1.4
+   repair ident table
+   check status of descriptor calls
+   add getstat M_DEV_CH_OPTION
+   check range of M_DEV_CH_OPTION
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/EXAMPLE/M33_EX1/COM/m33_ex1.c RCS 1.2 -> RCS 1.3
+   change values in array from 0xffff to 0xfff0
+
+-----[ Revision 1.3 ]-----
+[ 1998-03-11 08:53:40 by Schmidt ]
+*** CHANGED FILES ***
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/DOC/m33_demo.txt RCS 1.1 -> RCS 1.2
+   cosmetics
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/EXAMPLE/M33_DEMO/COM/m33_demo.c RCS 1.1 -> RCS 1.2
+   modified for VXWORKS
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/EXAMPLE/M33_EX1/COM/m33_ex1.c RCS 1.1 -> RCS 1.2
+   modified for VXWORKS
+File /_CVS_/COM/INCLUDE/m33_drv.h RCS 1.1 -> RCS 1.2
+   add $Log $
+
+-----[ Revision 1.2 ]-----
+[ 1998-03-06 16:59:49 by Schmidt ]
+*** CHANGED FILES ***
+File /_CVS_/COM/DRIVERS/MDIS_LL/M033/DRIVER/COM/m33_drv.c RCS 1.1 -> RCS 1.3
+   M33_Irq() : return LL_IRQ_DEV_NOT instead of MDIS_IRQ_UNKOWN
+   cosmetics
+   $Log $ added
+
+-----[ Revision 1.1 ]-----
+[ 1998-03-06 12:12:01 by Schmidt ]
+Added by mcvs
+

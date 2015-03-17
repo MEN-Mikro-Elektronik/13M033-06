@@ -1,0 +1,53 @@
+Program Description
+===================
+Wed Apr 14 12:04:18 CEST 2004
+ 
+Overview of all Programs
+------------------------
+
+
+m33_ex1         - M33 example accessing the voltage outputs
+m33_demo        - M33 example accessing the current outputs
+
+
+Program m33_ex1
+----------------
+
+Usage:
+   m33_ex1 <device>
+
+Function:
+   M33 example
+
+Options:
+   device   --    device name   
+   
+Description:
+   Simple example program for the M33 driver,
+   accesses the voltage channels   
+   
+   sets channels to different ranges
+   toggles some channels
+   applies a low-high ramp on channel 0
+   
+
+
+Program m33_demo
+----------------
+
+Usage:
+   m33_demo <device>
+
+Function:
+   M33 example
+
+Options:
+   device   --    device name   
+   
+Description:
+   Simple example program for the M33 driver,
+   acesses the current channels
+   
+   sets channel 0 to -5V to +5V
+   applies a series of quick low-high-low ramps on channel 0
+   toggles channel 0 to high

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Klaus Popp (MEN Mikro Elektronik GmbH) -->
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="packagedesc.xsd">
+	<name>13m03306</name>
+	<description>MDIS5 driver package for MEN M33 M-Module</description>
+	<date>2010-12-10</date>
+	<revision>2.2</revision>
+	<docroot>DRIVERS/MDIS_LL/M033/DOC/m33_drv.txt</docroot>
+	<modellist>
+		<model>
+			<hwname>M33</hwname>
+			<description>8 x 12 Bit Analog Outputs</description>
+			<devtype>MDIS</devtype>
+			<autoid>
+				<mmoduleid>0x53460021</mmoduleid>
+			</autoid>
+			<busif>M-Module</busif>
+			<swmodulelist>
+				<swmodule>
+					<name>m33</name>
+					<description>Driver for M33</description>
+					<type>Low Level Driver</type>
+					<makefilepath>M033/DRIVER/COM/driver.mak</makefilepath>
+				</swmodule>
+			</swmodulelist>
+		</model>
+	</modellist>
+	<settinglist>
+		<setting>
+			<name>ID_CHECK</name>
+			<description>Define wether M-Module ID-PROM is checked</description>
+			<type>U_INT32</type>
+			<defaultvalue>1</defaultvalue>
+			<choises>
+				<choise>
+					<value>1</value>
+					<description>enable</description>
+				</choise>
+				<choise>
+					<value>0</value>
+					<description>disable -- ignore IDPROM</description>
+				</choise>
+			</choises>
+		</setting>
+		<settingsubdir rangestart="0" rangeend="7">
+			<name>CHANNEL_</name>
+			<setting>
+				<name>M33_CH_RANGE</name>
+				<description>output range of channel</description>
+				<type>U_INT32</type>
+				<defaultvalue>0</defaultvalue>
+				<choises>
+					<choise>
+						<value>0</value>
+						<description>voltage: 0..+10V, current: 0..20mA</description>
+					</choise>
+					<choise>
+						<value>1</value>
+						<description>voltage: -5V..+5V, current: prohibited</description>
+					</choise>
+					<choise>
+						<value>3</value>
+						<description>voltage: -10V..+10V, current: prohibited</description>
+					</choise>
+				</choises>
+			</setting>
+		</settingsubdir>
+	</settinglist>
+	<swmodulelist>
+		<swmodule>
+			<name>m33_demo</name>
+			<description>Demonstration program for the M33 driver</description>
+			<type>Driver Specific Tool</type>
+			<makefilepath>M033/EXAMPLE/M33_DEMO/COM/program.mak</makefilepath>
+		</swmodule>
+		<swmodule>
+			<name>m33_ex1</name>
+			<description>Test program for the M33 driver</description>
+			<type>Driver Specific Tool</type>
+			<makefilepath>M033/EXAMPLE/M33_EX1/COM/program.mak</makefilepath>
+		</swmodule>
+	</swmodulelist>
+</package>
