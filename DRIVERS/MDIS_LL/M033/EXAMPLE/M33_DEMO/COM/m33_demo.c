@@ -13,38 +13,23 @@
  *     Required: -
  *     Switches: NO_MAIN_FUNC
  *
- *-------------------------------[ History ]---------------------------------
- *
- * $Log: m33_demo.c,v $
- * Revision 1.7  2010/12/10 15:01:02  amorbach
- * R: Porting to MDIS5
- * M: added support for 64bit (MDIS_PATH)
- *
- * Revision 1.6  2004/04/14 14:48:02  cs
- * Minor modifications for MDIS4/2004 conformity
- *       changed function M33_Demo prototype to static
- *
- * Revision 1.5  1998/08/03 14:48:13  Schmidt
- * M_DEV_CH_OPTION renamed to M33_CH_RANGE
- *
- * Revision 1.4  1998/07/27 14:31:41  see
- * run-loop removed: single executed
- * M_close error check was wrong
- * cosmetics
- *
- * Revision 1.3  1998/07/17 11:54:12  Schmidt
- * VXWORKS defines removed, support for variable device names implemented,
- * cosmetics to new style
- *
- * Revision 1.2  1998/03/10 17:50:12  Schmidt
- * modified for VXWORKS
- *
- * Revision 1.1  1998/03/04 17:28:55  Schmidt
- * Added by mcvs
- *
  *---------------------------------------------------------------------------
  * (c) Copyright 1998 by MEN mikro elektronik GmbH, Nuernberg, Germany 
  ****************************************************************************/
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 static char *RCSid="$Id: m33_demo.c,v 1.7 2010/12/10 15:01:02 amorbach Exp $";
 

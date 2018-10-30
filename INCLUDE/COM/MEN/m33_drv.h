@@ -11,28 +11,23 @@
  *     Switches:  _ONE_NAMESPACE_PER_DRIVER_
  *				  _LL_DRV_
  *
- *-------------------------------[ History ]---------------------------------
- *
- * $Log: m33_drv.h,v $
- * Revision 1.5  2010/12/10 15:05:37  amorbach
- * R: driver ported to MDIS5, new MDIS_API and men_typs
- * M: for backward compatibility to MDIS4 optionally define new types
- *
- * Revision 1.4  2004/04/14 14:51:49  cs
- * Minor modifications for MDIS4/2004 conformity
- *       added swapped access variant of M33_GetEntry
- *       changed function prototypes to static and moved to m33_drv.c
- *
- * Revision 1.3  1998/08/03 14:48:27  Schmidt
- * M_DEV_CH_OPTION renamed to M33_CH_RANGE
- * M33_CHNL_NBR removed
- *
- * Revision 1.2  1998/03/06 17:56:48  Schmidt
- * add $Log $
- *
  *---------------------------------------------------------------------------
  * (c) Copyright 1992,1993 by MEN mikro elektronik GmbH, Nuernberg, Germany
  ****************************************************************************/
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #ifndef _M33_LL_H_                   
 #define _M33_LL_H_

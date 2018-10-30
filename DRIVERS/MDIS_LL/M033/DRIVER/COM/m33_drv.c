@@ -12,72 +12,23 @@
  *     Required:  ---
  *     Switches:  _ONE_NAMESPACE_PER_DRIVER_
  *
- *-------------------------------[ History ]---------------------------------
- *
- * $Log: m33_drv.c,v $
- * Revision 1.12  2010/12/10 15:01:20  amorbach
- * R: 1.Porting to MDIS5 (according porting guide rev. 0.7)
- * 2.Diab compiler warnings
- * M: 1.a) added support for 64bit (Set/GetStat prototypes, m_read calls)
- * b) added casts to avoid compiler warnings
- * 2.   Explizit casts added
- *
- * Revision 1.11  2005/07/11 10:41:26  cs
- * removed useless "break" instruction in function M33_GetStat
- *
- * Revision 1.10  2004/04/14 14:27:26  cs
- * Minor modifications for MDIS4/2004 conformity
- *       changed function prototypes (static)
- *       changed address space size (M33_Info/LL_INFO_ADDRSPACE) to 0x100
- *       added lock mode processing (M33_Info/LL_INFO_LOCKMODE)
- *       some typecasts needed for win2k compatibility
- *
- * Revision 1.9  1999/07/21 14:52:30  Franke
- * cosmetics
- *
- * Revision 1.8  1998/08/03 14:48:00  Schmidt
- * idFuncTbl is now located in LL_HANDLE
- * idFuncTbl is now initialized in Init
- * IdFuncTbl() removed
- * error messages are now with prefix LL
- * use CH_NUMBER instead of M33_CHNL_NUMBER
- * M_DEV_CH_OPTION renamed to M33_CH_RANGE
- *
- * Revision 1.7  1998/07/27 14:31:32  see
- * wrong static const char *IdentString type changed
- * M33_Init: ID_CHECK default is now 1
- * M33_Init: error message was wrong
- * M33_Getstat: M_LL_ID_SIZE returned wrong size=32
- * M33_Getstat: M_LL_BLK_ID_DATA changed (template style)
- * LL_HANDLE: unused irqHdl removed
- * LL_HANDLE: base renamed to ma (template style)
- * some defs renamed (template style)
- * some defs added (template style)
- * "Known bugs" info is no in M33_GetStat header (M_LL_BLK_ID_DATA)
- *
- * Revision 1.6  1998/07/20 09:08:32  Schmidt
- * DBGEXIT() added
- *
- * Revision 1.5  1998/07/17 11:52:27  Schmidt
- * update to MDIS 4.1, new function IdFuncTbl(),
- * Set/Getstat: M_BUF_WR_MODE removed
- *
- * Revision 1.4  1998/03/13 15:33:56  Schmidt
- * repair ident table
- * check status of descriptor calls
- * add getstat M_DEV_CH_OPTION
- * check range of M_DEV_CH_OPTION
- *
- * Revision 1.3  1998/03/06 16:54:08  Schmidt
- * M33_Irq() : return LL_IRQ_DEV_NOT instead of MDIS_IRQ_UNKOWN
- * cosmetics
- *
- * Revision 1.2  1998/03/06 16:00:30  Schmidt
- * $Log $ added
- *
  *---------------------------------------------------------------------------
  * (c) Copyright 1998 by MEN mikro elektronik GmbH, Nuernberg, Germany
  ****************************************************************************/
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 static const char IdentString[]="M33 - m33 low level driver: $Id: m33_drv.c,v 1.12 2010/12/10 15:01:20 amorbach Exp $";
 
