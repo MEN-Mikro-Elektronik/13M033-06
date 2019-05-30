@@ -5,8 +5,6 @@
  ****************************************************************************
  *  
  *       Author: ds
- *        $Date: 2010/12/10 15:00:52 $
- *    $Revision: 1.8 $
  *
  *  Description: Example program for the M33 M-Module
  *                                            
@@ -31,13 +29,14 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-static char *RCSid="$Id: m33_ex1.c,v 1.8 2010/12/10 15:00:52 amorbach Exp $";
 
 #include <stdio.h>
 #include <MEN/men_typs.h>	/* men type definitions */
 #include <MEN/mdis_api.h>	/* mdis user interface */
 #include <MEN/m33_drv.h>	/* m33 definitions */
 #include <MEN/usr_oss.h>	/* user mode system services */
+
+static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 
 /*-----------------------------------------+
 |  PROTOTYPES                              |
@@ -108,7 +107,7 @@ static int M33_Ex1( char *devName )
 	printf("m33_ex1 - simple example program for the M33 module\n");
     printf("===================================================\n\n");
 
-    printf("%s\n\n", RCSid);
+    printf("%s\n\n", IdentString);
 
     /*----------------------+  
     | open the device       |

@@ -1,8 +1,6 @@
 #**************************  M a k e f i l e ********************************
 #  
 #         Author: ds
-#          $Date: 2005/07/11 09:18:39 $
-#      $Revision: 1.2 $
 #  
 #    Description: makefile descriptor for MDIS LL-Driver 
 #                      
@@ -23,6 +21,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 MAK_NAME=m33_sw
+# the next line is updated during the MDIS installation
+STAMPED_REVISION="13M033-06_02_03-1-g30e7e3b-dirty_2019-05-10"
+
+DEF_REVISION=MAK_REVISION=$(STAMPED_REVISION)
 
 MAK_LIBS=$(LIB_PREFIX)$(MEN_LIB_DIR)/desc$(LIB_SUFFIX)    \
          $(LIB_PREFIX)$(MEN_LIB_DIR)/id_sw$(LIB_SUFFIX)      \
@@ -43,6 +45,7 @@ MAK_INCL=$(MEN_INC_DIR)/mdis_com.h   \
          $(MEN_INC_DIR)/dbg.h
 
 MAK_SWITCH=$(SW_PREFIX)MAC_BYTESWAP   \
+		$(SW_PREFIX)$(DEF_REVISION) \
            $(SW_PREFIX)MAC_MEM_MAPPED \
            $(SW_PREFIX)ID_SW          \
            $(SW_PREFIX)M33_SW

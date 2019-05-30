@@ -4,8 +4,6 @@
  *      Project: M33 module LL-driver (MDIS5)
  *
  *       Author: ds
- *        $Date: 2010/12/10 15:01:20 $
- *    $Revision: 1.12 $
  *
  *  Description: MDIS low level driver for M33 module
  *
@@ -30,8 +28,6 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-static const char IdentString[]="M33 - m33 low level driver: $Id: m33_drv.c,v 1.12 2010/12/10 15:01:20 amorbach Exp $";
-
 #include <MEN/mdis_com.h>    /* info function codes            */
 #include <MEN/men_typs.h>   /* system dependend definitions   */
 #include <MEN/dbg.h>        /* debug functions                */
@@ -45,6 +41,8 @@ static const char IdentString[]="M33 - m33 low level driver: $Id: m33_drv.c,v 1.
 #include <MEN/ll_defs.h>    /* low level driver definitions   */
 #include <MEN/ll_entry.h>    /* low level driver entry struct  */
 #include <MEN/m33_drv.h>    /* M33 driver header file          */
+
+static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 
 /*-----------------------------------------+
 |  DEFINES                                 |

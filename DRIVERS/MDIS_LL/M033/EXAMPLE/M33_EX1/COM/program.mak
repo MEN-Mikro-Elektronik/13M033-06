@@ -1,8 +1,6 @@
 #**************************  M a k e f i l e ********************************
 #  
-#        $Author: cs $
-#          $Date: 2004/04/14 14:48:05 $
-#      $Revision: 1.3 $
+#        Author: cs 
 #  
 #    Description: Makefile definitions for the m33_ex1 example program
 #                      
@@ -24,6 +22,11 @@
 
 
 MAK_NAME=m33_ex1
+# the next line is updated during the MDIS installation
+STAMPED_REVISION="13M033-06_02_03-1-g30e7e3b-dirty_2019-05-10"
+
+DEF_REVISION=MAK_REVISION=$(STAMPED_REVISION)
+MAK_SWITCH=$(SW_PREFIX)$(DEF_REVISION)
 
 MAK_LIBS=$(LIB_PREFIX)$(MEN_LIB_DIR)/mdis_api$(LIB_SUFFIX) \
          $(LIB_PREFIX)$(MEN_LIB_DIR)/usr_oss$(LIB_SUFFIX)

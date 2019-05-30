@@ -3,8 +3,6 @@
  *         Name: m33_ll.h
  *
  *       Author: ds
- *        $Date: 2010/12/10 15:05:37 $
- *    $Revision: 1.5 $
  *
  *  Description: M33 specific set-/getstat codes and LL prototypes
  *
